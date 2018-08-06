@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = Dcmx::VERSION
   spec.authors       = ["Seahal"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = 'TODO: Put your gem\'s website or public repo URL here.'
-  spec.license       = 'MIT'
+  spec.summary       = %q{DCMX is a markdown preprocessor.}
+  spec.description   = %q{categorize your markdown file.}
+  spec.homepage      = 'https://seahal.net/'
+  spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.

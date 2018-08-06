@@ -1,5 +1,7 @@
-require "dcmx/version"
+require 'dcmx/version'
+require 'thor'
 
-module Dcmx
-  # Your code goes here...
+module Dcmx < Thor
+  def hello
+  end
 end
