@@ -1,0 +1,5 @@
+ja:
+  file: ファイルが見つかりません
+  null_command: コマンドを入力しましょう
+  create_help: "このコマンドではマークダウン･ファイルをつくることができます\n\t$ dcmx create example \nまた以下の引数を指定することも可能です\n\t -f, --from\t 開始する日付を指定します\n\t -b, --by\t 終了する日付を指定します\n\t -i, --input\t テンプレートファイルを指定します\n\t -o, --output\t 出力先を指定します\n"
+  create_null: ファイル名は指名する必要があります

@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+require "yaml"
+require "i18n"
+require "dcmx"
+require "erb"
+
+SETTINGS_FILE = "./src/default.yml"
+begin
+  settings = YAML.load_file("~/.config/dcmx/settings.yml")
+rescue
+  settings = YAML.load_file(SETTINGS_FILE)
+end
+
+I18n.backend.load_translations(Dir.glob("./locales/*.yml"))
+I18n.load_path << Dir.glob("./locales/*.yml")
+I18n.locale = settings["lang"]
+
+case ARGV[0]
+when "create"
+  if ["-h", "--help", "help"].include? ARGV[1]
+    puts I18n.t("create_help")
+    return nil
+  end
+
+  if ARGV[1].nil? || ARGV[1] =~ /^-{1,2}/
+    puts I18n.t("create_null")
+    return nil
+  end
+
+  cons = ARGV[1..-1].each_cons(2)
+  title = ARGV[1]
+  from = cons.select { |fst, snd| fst =~ /^(--from)|(-f)/ }.last&.last || Time.now
+  by = cons.select { |fst, snd| fst =~ /^(--by)|(-b)/ }.last&.last || Time.now
+  input = cons.select { |fst, snd| fst =~ /^(--input)|(-i)/ }.last&.last || "./src/original.erb"
+  output = cons.select { |fst, snd| fst =~ /^(--output)|(-o)/ }.last&.last || "_drafts"
+
+  loop.with_index(0) do |_, add|
+    that_time = from + 24 * 60 * 60 * add
+    lines = []
+
+    break if that_time > from
+
+    File.open("./src/original.erb", "r").each do |line|
+      lines << ERB.new(line.chomp).result(binding)
+    end
+
+    created_file = File.open("#{output}/#{that_time.strftime("%Y-%m-%d")}-#{ARGV[1]}.md", "w")
+    lines.each { |line| created_file.puts(line) }
+    created_file.close
+  end
+when "help"
+else
+  puts I18n.t("null_command")
+end
